@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="src/assets/images/favicon.png" />
+    <meta name="msapplication-TileColor" content="#008080" />
+    <meta name="theme-color" content="#008080" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+          content="Bills-Pc AKA Bills RAD Website" />
+    <title>Bills-PC</title>
+    <link href="https://unpkg.com/basscss@8.0.2/css/basscss.min.css"
+          rel="stylesheet" />
+    <style>
+        
+        
+        @font-face {
+            font-family: "Windows 95";
+            src: url("./public/fonts/w-95-sans-serif.woff2") format("woff2"), url("./public/fonts/w-95-sans-serif.woff") format("woff");
+            font-weight: normal;
+            font-style: normal;
+        }
+
+
+        @font-face {
+            font-family: 'ms_sans_serif';
+            src: url("./public/fonts/ms_sans_serif.woff2") format('woff2');
+            font-weight: 400;
+            font-style: normal
+        }
+
+        @font-face {
+            font-family: 'ms_sans_serif';
+            src: url("./public/fonts/ms_sans_serif_bold.woff2") format('woff2');
+            font-weight: bold;
+            font-style: normal
+        }
+
+        html,
+        body,
+        #root {
+            height: 100%;
+        }
+
+        html,
+        body {
+            /*max-width: 1400px;
+            min-width: 768px;*/ 
+            max-width: 100%;
+            min-width: 55%;
+            overflow: hidden;
+            overflow-x: auto;
+            margin: auto !important;
+        }
+
+        body {
+            background-color: #000;
+            position: relative;
+        }
+
+            body:after {
+                position: fixed;
+                content: "";
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background: linear-gradient(transparent 50%, #fff 50%), linear-gradient(90deg, #f00, #f00 33%, #0f0 33%, #0f0 66%, #00f 66%);
+                background-size: 100% 3px, 3px 3px;
+                pointer-events: none;
+                opacity: 0.06;
+                z-index: 99999;
+            }
+
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        a,
+        span,
+        li,
+        th,
+        td,
+        button,
+        input,
+        label,
+        th,
+        td,
+        pre {
+            font-family: "Windows 95", sans-serif !important;
+        }
+
+        p,
+        a,
+        span,
+        li,
+        button,
+        input,
+        label,
+        th,
+        td,
+        pre {
+            font-size: 10px !important;
+        }
+
+        p {
+            line-height: 2 !important;
+        }
+
+        #root {
+            position: relative;
+            background-color: #008080;
+        }
+
+        main {
+            height: calc(100% - 47px);
+            padding-bottom: 47px;
+        }
+
+        html,
+        body,
+        body #root * {
+            cursor: url("./public/assets/cursor.ico"), default !important;
+        }
+
+            body #root a,
+            body #root button,
+            body #root .checkbox,
+            body #root .checkbox *,
+            body #root .cursorPointer {
+                cursor: url("./public/assets/cursor-pointer.ico"), pointer !important;
+            }
+
+            body.isLoading,
+            body.isLoading #root * {
+                cursor: url("./public/assets/cursor-progress.ico"), progress !important;
+            }
+    </style>
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+</body>
+</html>

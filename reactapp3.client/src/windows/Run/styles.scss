@@ -1,0 +1,74 @@
+.runWindow {
+    width: 450px;
+    min-height: 180px;
+
+    .imgSection {
+        width: 70px;
+        height: 79px;
+        display: inline-block;
+        margin: 0px, 0px, 0px, 0px;
+    }
+
+    img {
+        padding: 10px 0px 0px 0px;
+        height: 64px;
+        width: 64px;
+    }
+
+    .messageSection {
+        position: relative;
+        width: 350px;
+        height: 100%;
+        display: inline-block;
+        bottom: 20px;
+    }
+
+    &__runSelection {
+        font-size: 10px;
+    }
+
+    .openLabel {
+        position: relative;
+        display: inline-block;
+        bottom: 6px;
+        left: 10px;
+    }
+
+    .selectDropdown {
+        width: 360px;
+        position: relative;
+        display: inline-block;
+        bottom: 3px;
+        left: 36px;
+
+        .selection {
+            font-size: 10px;
+        }
+    }
+
+    .runWindowButton {
+        position: absolute;
+        display: inline-block;
+
+        .okButton {
+            position: relative;
+            width: 100px;
+            top: 18px;
+            left: 120px
+        }
+
+        .cancelButton {
+            position: relative;
+            width: 100px;
+            top: 18px;
+            left: 226px;
+        }
+
+        .browseButton {
+            position: relative;
+            width: 100px;
+            top: 18px;
+            left: 332px;
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "@types/node": "^20.11.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "howler": "^2.2.4",
+    "react": "^18.2.0",
+    "react-draggable": "^4.4.6",
+    "react-router-dom": "^6.22.0",
+    "react-scripts": "^3.0.1",
+    "react95": "^4.0.0",
+    "recoil": "^0.7.7",
+    "styled-components": "^6.1.8",
+    "vite": "^5.1.2"
+  },
+  "devDependencies": {
+    "@types/howler": "^2.2.11",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "sass": "^1.71.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  }
+}

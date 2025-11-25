@@ -1,0 +1,90 @@
+.startMenu {
+    position: relative;
+    width: 88px; // button width + extra space
+    &__slide {
+        position: absolute;
+        bottom: 36px;
+        overflow: hidden;
+        max-height: 0;
+
+        &.-isOpen {
+            //max-height: 200px;
+            max-height: 300px;
+
+            .startMenu__menu {
+                transform: translateY(0);
+                transition: 0.15s;
+            }
+        }
+    }
+
+    &__menu.startMenu__menu {
+        padding-left: 30px;
+        position: relative;
+        transform: translateY(100%);
+
+        &:before {
+            position: absolute;
+            content: "";
+            background-color: #00007B;
+            width: 30px;
+            height: calc(100% - 4px);
+            top: 1px;
+            left: 1px;
+        }
+
+        &:after {
+            position: absolute;
+            content: "Bills-PC";
+            left: 4px;
+            bottom: -15px;
+            color: #ededed;
+            text-shadow: 1px 0px #ededed;
+            letter-spacing: 2px;
+            transform: rotate(-90deg);
+            transform-origin: 0 0;
+        }
+    }
+
+    &__triggerButton {
+        text-shadow: -1px 0 hsla(0, 0%, 0%, 0.7);
+    }
+
+    &__logo {
+        position: relative;
+        top: -1px;
+        left: -1px;
+        width: 25px;
+        width: 25px;
+        padding-right: 5px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: pixelated;
+        pointer-events: none;
+        margin-top: 0.30rem;
+    }
+
+    &__menuItem {
+        font-size: 12px !important;
+        //padding: 0.15rem 1rem 0 0.25rem;
+        padding: 0.15rem 1rem 1rem 0.25rem;
+
+        &.-soundItem {
+            padding-right: 0;
+
+            > span {
+                position: relative;
+                top: -2px;
+                color: #000 !important;
+            }
+        }
+
+        > img {
+            position: relative;
+            top: 12px;
+            margin-right: 0.80rem;
+            width: 35px;
+            height: 35px;
+        }
+    }
+}

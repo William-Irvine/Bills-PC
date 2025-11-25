@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.271090-alpha">
+  <PropertyGroup>
+    <StartupCommand>npm run dev</StartupCommand>
+    <JavaScriptTestRoot>src\</JavaScriptTestRoot>
+    <JavaScriptTestFramework>Jest</JavaScriptTestFramework>
+    <!-- Allows the build (or compile) script located on package.json to run on Build -->
+    <ShouldRunBuildScript>false</ShouldRunBuildScript>
+    <!-- Folder where production build objects will be placed -->
+    <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\components\ErrorPopup\" />
+    <Folder Include="src\components\StartupSound\" />
+    <Folder Include="src\views\Desktop\" />
+    <Folder Include="src\views\Login\" />
+    <Folder Include="src\views\StartMenu\" />
+    <Folder Include="src\views\Taskbar\" />
+    <Folder Include="src\windows\About\" />
+    <Folder Include="src\windows\Welcome\" />
+  </ItemGroup>
+</Project>

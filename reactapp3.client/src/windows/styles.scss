@@ -1,0 +1,86 @@
+.windowFrame {
+    position: absolute;
+    height: calc(100% - 50px);
+    min-height: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &__inner.windowFrame__inner {
+        display: flex;
+        height: 100%;
+    }
+
+    &__content.windowFrame__content {
+        flex: 1;
+        padding: 0.25rem;
+    }
+
+    &__contentInner {
+        position: relative;
+        height: calc(100% - 4px);
+    }
+    // Window specific styles
+    &.-welcome {
+        max-height: 500px;
+        width: 610px;
+    }
+
+    &.-about {
+        width: auto;
+        height: auto;
+    }
+
+    &.-weather {
+        width: auto;
+        height: auto;
+    }
+
+    &.-credits {
+        width: auto;
+        height: auto;
+    }
+
+    &.-run {
+        width: auto;
+        height: auto;
+    }
+
+    &.-user {
+        max-height: 650px;
+        width: 850px;
+    }
+
+    &.-repos {
+        max-height: 650px;
+        width: 710px;
+    }
+
+    &.-trending,
+    &.-mostFollowed {
+        max-height: 605px;
+    }
+
+    &.-repositoryDetails {
+        max-height: 600px;
+        width: 800px;
+    }
+}
+
+.windowHeader.-inactive {
+    background: #999 !important;
+}
+
+.windowHeader__title {
+    > img {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+    }
+}
+
+.windowButton__icon.-close {
+    font-weight: bold;
+    transform: translateY(-2px);
+    pointer-events: none;
+}
