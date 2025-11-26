@@ -1,4 +1,5 @@
-//import React from "react";
+﻿// src/views/Login/index.tsx
+import React from "react";
 import {
     Window,
     WindowHeader,
@@ -6,23 +7,57 @@ import {
     Button,
     TextInput,
 } from "react95";
-//import { useRecoilValue } from "recoil";
+import { useSetRecoilState } from "recoil";
 
-//import ErrorPopup from "../../components/ErrorPopup";
-
-//import { apiLimit } from "../../store/atoms";
+import { currentUser, unlockedAccounts as unlockedAccountsAtom } from "../../store/atoms";
+import { checkLogin, unlockAccount, loadProgress, accounts } from "../../data/accountsData";
 
 import "./styles.scss";
 
 export default function Login({ onLogin }: any) {
-    //const limit = useRecoilValue(apiLimit);
-    //const [showError, setShowError] = React.useState(false);
+    const [username, setUsername] = React.useState("admin");
+    const [password, setPassword] = React.useState("");
+    const [error, setError] = React.useState("");
+    const [isLoading, setIsLoading] = React.useState(false);
 
-    const handleClick = () => {
-        //if (limit.exceeded) {
-        //   return setShowError(true);
-        //} else onLogin();
-        onLogin();
+    const setCurrentUser = useSetRecoilState(currentUser);
+    const setUnlockedAccounts = useSetRecoilState(unlockedAccountsAtom);
+
+    React.useEffect(() => {
+        // Load saved progress on mount
+        const savedProgress = loadProgress();
+        setUnlockedAccounts(savedProgress);
+    }, [setUnlockedAccounts]);
+
+    const handleLogin = () => {
+        setError("");
+        setIsLoading(true);
+
+        setTimeout(() => {
+            const result = checkLogin(username, password);
+
+            if (result.success && result.account) {
+                const accountKey = Object.keys(accounts).find(
+                    key => accounts[key].username.toLowerCase() === username.toLowerCase()
+                );
+
+                if (accountKey) {
+                    setUnlockedAccounts(current => unlockAccount(accountKey, current));
+                }
+
+                setCurrentUser(result.account);
+                onLogin();
+            } else {
+                setError(result.error || "Login failed");
+                setIsLoading(false);
+            }
+        }, 500);
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && !isLoading) {
+            handleLogin();
+        }
     };
 
     return (
@@ -33,7 +68,12 @@ export default function Login({ onLogin }: any) {
             >
                 <WindowHeader className='flex items-center justify-between handle'>
                     <span>Welcome to Bills-PC</span>
-                    <Button size={'sm'} square={true} disabled={false} onClick={() => ""}>
+                    <Button
+                        size={'sm'}
+                        square={true}
+                        disabled={true}
+                        onClick={() => ""}
+                    >
                         <span
                             style={{
                                 fontWeight: "bold",
@@ -51,86 +91,69 @@ export default function Login({ onLogin }: any) {
                             alt=""
                             className="pl1 pr3 pixelated login__image"
                         />
-                        <div>
-                            <p className="pb2">Click OK to log on to Bills-PC</p>
+                        <div style={{ flex: 1 }}>
+                            <p className="pb2">
+                                {isLoading ? "Logging in..." : "Click OK to log on to Bills-PC"}
+                            </p>
                             <div className="relative">
-                                <div className="absolute login__inputOverlay"></div>
-                                <div className="flex pb1 login__input">
-                                    <p>User name:</p>
-                                    <TextInput value="Admin" onChange={() => ""} />
+                                <div className="flex pb1 login__input" style={{ alignItems: 'center', gap: '8px' }}>
+                                    <p style={{ minWidth: '80px' }}>User name:</p>
+                                    <TextInput
+                                        value={username}
+                                        onChange={(e: any) => {
+                                            setUsername(e.target.value);
+                                            setError("");
+                                        }}
+                                        onKeyDown={handleKeyPress}
+                                        disabled={isLoading}
+                                        style={{ flex: 1 }}
+                                    />
                                 </div>
-                                <div className="flex login__input">
-                                    <p>Password</p>
-                                    <TextInput value="*******" onChange={() => ""} />
+                                <div className="flex login__input" style={{ alignItems: 'center', gap: '8px' }}>
+                                    <p style={{ minWidth: '80px' }}>Password:</p>
+                                    <TextInput
+                                        type="password"
+                                        value={password}
+                                        onChange={(e: any) => {
+                                            setPassword(e.target.value);
+                                            setError("");
+                                        }}
+                                        onKeyDown={handleKeyPress}
+                                        disabled={isLoading}
+                                        style={{ flex: 1 }}
+                                    />
                                 </div>
+                                {error && (
+                                    <div style={{
+                                        color: 'red',
+                                        marginTop: '8px',
+                                        fontSize: '12px'
+                                    }}>
+                                        ⚠️ {error}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="pl3 login__button">
-                            <Button onClick={handleClick}>OK</Button>
+                            <Button
+                                onClick={handleLogin}
+                                disabled={isLoading || !username}
+                            >
+                                OK
+                            </Button>
                         </div>
                     </div>
-                </WindowContent>
-            </Window>  
-        </div>
-    );
-    /*
-    return (
-        <div className='flex justify-center items-center login'>
-            <Window
-                shadow={true}
-                className='flex-column windowFrame__inner login__window'
-            >
-                <WindowHeader className='flex items-center justify-between handle'>
-                    <span>Welcome to Bills-PC</span>
-                    <Button size={'sm'} square disabled={false} onClick={() => ""}>
-                        <span
-                            style={{
-                                fontWeight: "bold",
-                                transform: "translateY(-1px)",
-                            }}
-                        >
-                            x
-                        </span>
-                    </Button>
-                </WindowHeader>
-                <WindowContent>
-                    <div className='flex'>
-                        <img
-                            src="src/assets/images/password.png"
-                            alt=""
-                            className="pl1 pr3 pixelated login__image"
-                        />
-                        <div>
-                            <p className="pb2">Click OK to log on to Bills-PC</p>
-                            <div className="relative">
-                                <div className="absolute login__inputOverlay"></div>
-                                <div className="flex pb1 login__input">
-                                    <p>User name:</p>
-                                    <TextInput value="Admin" onChange={() => ""} />
-                                </div>
-                                <div className="flex login__input">
-                                    <p>Password</p>
-                                    <TextInput value="*******" onChange={() => ""} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="pl3 login__button">
-                            <Button onClick={handleClick}>OK</Button>
-                        </div>
+                    <div style={{
+                        marginTop: '12px',
+                        padding: '8px',
+                        background: '#c0c0c0',
+                        border: '1px solid #808080',
+                        fontSize: '11px'
+                    }}>
+                        <strong>💡 Default login:</strong> admin / admin123
                     </div>
                 </WindowContent>
             </Window>
-
-            {showError && (
-                <ErrorPopup
-                    header="Access Denied"
-                    dismissable={false}
-                >
-                    <p className="pb1">
-                        Invalid username or password. Please try again.
-                    </p>
-                </ErrorPopup>
-            )}
         </div>
-    ); */
+    );
 }

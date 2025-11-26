@@ -1,16 +1,14 @@
-//import React, { useState } from "react";
+﻿// src/views/Desktop/index.tsx
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
-//import StartupSound, { playStartupSound } from "../../components/StartupSound";
 import StartupSound from "../../components/StartupSound";
 import Taskbar from "../Taskbar";
 import Windows from "./Windows";
 import DesktopButton from "./DesktopButton";
 
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { WINDOW_OBJ } from "../../constants";
-import { windowObj } from "../../store/atoms";
+import { windowObj, currentUser } from "../../store/atoms";
 import reducer, {
     SET_LOADING,
     SET_TASKBAR,
@@ -20,103 +18,142 @@ import reducer, {
 
 import "./styles.scss";
 
-const desktopIcons = (() => {
-    const icons = Object.keys(WINDOW_OBJ)
-        .filter((name) => (WINDOW_OBJ[name].desktopIcon ? name : null))
-        .sort(
-            (a, b) => WINDOW_OBJ[a].desktopPosition - WINDOW_OBJ[b].desktopPosition
-        );
-    return icons;
-})();
-
 export default function Desktop() {
     const [currentWindows, setWindows]: any = useRecoilState(windowObj);
-    // const limit = useRecoilValue(apiLimit);
+    const user = useRecoilValue(currentUser);
     const [active, setActive] = React.useState("");
-    // eslint-disable-next-line no-unused-vars
     const [soundStorage, _] = useLocalStorage("billsPC_noSound", "On");
-    //const [soundStorage, _] = useLocalStorage("billsPC_noSound", true);
-
-    //const is_logged_in = localStorage.getItem("logged_in");
+    const [desktopIcons, setDesktopIcons] = React.useState<any[]>([]);
 
     const [
         { showLoader, showTaskbar, showIcons, showWindows },
         dispatch,
     ] = reducer();
 
+    // Load desktop icons based on current user
+    React.useEffect(() => {
+        if (user && user.desktop) {
+            // Convert account icons to desktop format
+            const icons = user.desktop.icons.map(icon => ({
+                name: icon.id,
+                label: icon.name,
+                desktopIcon: icon.icon,
+                content: icon.content,
+                type: icon.type,
+                component: icon.component,
+                metadata: icon.metadata,
+                browserHistory: icon.browserHistory,
+                bookmarks: icon.bookmarks,
+                playlists: icon.playlists
+            }));
+            setDesktopIcons(icons);
+        }
+    }, [user]);
+
     const handleDesktopClick = ({ target }: any) => {
         const { name } = target.dataset;
         setActive(name || "");
     };
 
-    const handleButtonDblClick = (name: any) => (e: any) => {
+    const handleButtonDblClick = (iconData: any) => (e: any) => {
         e.stopPropagation();
-        const updated = {
-            [name]: {
-                ...currentWindows[name],
-                visibility: [true, true],
-            },
+
+        // Create a window for this icon
+        const windowName = iconData.name;
+        const windowConfig = {
+            label: iconData.label,
+            header: `${iconData.label}${iconData.type === 'file' ? ' - Notepad' : ''}`,
+            desktopIcon: iconData.desktopIcon,
+            visibility: [true, true],
+            content: iconData.content,
+            type: iconData.type,
+            component: iconData.component,
+            metadata: iconData.metadata,
+            browserHistory: iconData.browserHistory,
+            bookmarks: iconData.bookmarks,
+            playlists: iconData.playlists
         };
 
         window.setTimeout(() => {
-            setWindows({ ...currentWindows, ...updated });
+            setWindows({
+                ...currentWindows,
+                [windowName]: windowConfig
+            });
         }, 300);
     };
 
     React.useEffect(() => {
-        // @ts-ignore
         dispatch({ type: SET_LOADING });
         window.setTimeout(() => {
-            // @ts-ignore
             dispatch({ type: SET_TASKBAR });
         }, 500);
         window.setTimeout(() => {
-            // @ts-ignore
             dispatch({ type: SET_ICONS });
         }, 1250);
         window.setTimeout(() => {
-            // @ts-ignore
             dispatch({ type: SET_WINDOWS });
         }, 2500);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     React.useEffect(() => {
         const toggle = showLoader ? "add" : "remove";
         document.body.classList[toggle]("isLoading");
     }, [showLoader]);
+
+    // Set wallpaper based on user
+    React.useEffect(() => {
+        if (user && user.wallpaper) {
+            document.body.style.backgroundColor = user.wallpaper === 'teal' ? '#008080' : '#008080';
+            // You can add more wallpaper styles here
+        }
+    }, [user]);
+
     return (
         <>
-             {showTaskbar && ( 
+            {showTaskbar && (
                 <>
                     <Taskbar />
-                    {(soundStorage !== "Off") && <StartupSound />}                    
+                    {(soundStorage !== "Off") && <StartupSound />}
                 </>
-             )} 
+            )}
             <main>
                 <section className="desktop">
                     <section
                         className="flex flex-column desktop__background"
                         onClick={handleDesktopClick}
                     >
-                        {showIcons && 
-                        desktopIcons.map((name) => {
-                                const { label, desktopIcon } = WINDOW_OBJ[name];
-                                return (
-                                    <React.Fragment key={name}>
-                                        {desktopIcon.length && (
-                                            <DesktopButton
-                                                name={name}
-                                                label={label}
-                                                icon={desktopIcon}
-                                                active={active}
-                                                onDoubleClick={handleButtonDblClick(name)}
-                                            />
-                                        )}
-                                    </React.Fragment>
-                                );
-                            })
-                        }
+                        {showIcons && user && desktopIcons.map((icon, _index) => {
+                            return (
+                                <React.Fragment key={icon.name}>
+                                    {icon.desktopIcon && (
+                                        <DesktopButton
+                                            name={icon.name}
+                                            label={icon.label}
+                                            icon={icon.desktopIcon}
+                                            active={active}
+                                            onDoubleClick={handleButtonDblClick(icon)}
+                                        />
+                                    )}
+                                </React.Fragment>
+                            );
+                        })}
+
+                        {/* Show user display name in corner */}
+                        {user && (
+                            <div style={{
+                                position: 'fixed',
+                                bottom: '40px',
+                                right: '10px',
+                                background: 'rgba(0,0,0,0.7)',
+                                color: 'white',
+                                padding: '4px 8px',
+                                fontSize: '11px',
+                                borderRadius: '2px',
+                                fontFamily: 'monospace'
+                            }}>
+                                👤 {user.displayName}
+                            </div>
+                        )}
                     </section>
 
                     {showWindows && <Windows />}

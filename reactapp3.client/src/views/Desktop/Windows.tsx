@@ -13,6 +13,9 @@ import WindowFrame, {
 
 import { windowObj } from "../../store/atoms";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import FileViewer from "../../windows/FileViewer";
+import RecycleBin from "../../windows/RecycleBin";
+import InternetExplorer from "../../windows/InternetExplorer";
 
 const componentList: any = {
     welcome: Welcome,
@@ -21,6 +24,8 @@ const componentList: any = {
     credits: Credits,
     run: Run,
     documents: Documents,
+    recycle_bin: RecycleBin,
+    browser: InternetExplorer,
 };
 
 export default function Windows() {
@@ -43,10 +48,19 @@ export default function Windows() {
 
     const getContent = (name: any) => {
         const Comp = componentList[name];
-        //if (Comp === undefined) return <Repo name={name} />;
 
-        return <Comp />;
+        // If it's a registered component, use it
+        if (Comp) return <Comp window={currentWindows[name]} />;
+
+        // Otherwise, check if the window has content (it's a file)
+        if (currentWindows[name]?.content) {
+            return <FileViewer window={currentWindows[name]} />;
+        }
+
+        // Default fallback
+        return <div>Unknown window type</div>;
     };
+
 
     const getCssName = (name: any) => {
         if (name in componentList) return name;

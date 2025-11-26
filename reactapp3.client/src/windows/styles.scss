@@ -46,6 +46,24 @@
         height: auto;
     }
 
+    &.-recycle_bin {
+        width: 550px;
+        height: 450px;
+        max-height: 450px;
+    }
+
+    &.-documents {
+        width: 770px;
+        height: 620px;
+        max-height: 620px;
+    }
+
+    &.-browser {
+        width: 700px;
+        height: 650px;
+        max-height: 650px;
+    }
+
     &.-user {
         max-height: 650px;
         width: 850px;
@@ -57,8 +75,11 @@
     }
 
     &.-trending,
-    &.-mostFollowed {
-        max-height: 605px;
+    &.-mostFollowedWindow,
+    &.-explorerWindow {
+        width: 650px;
+        height: 500px;
+        max-height: 500px;
     }
 
     &.-repositoryDetails {

@@ -1,8 +1,8 @@
 ﻿import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button, MenuList, MenuListItem, Separator } from "react95";
 
-import { windowObj } from "../../store/atoms";
+import { windowObj, currentUser } from "../../store/atoms";
 
 import "./styles.scss";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -21,6 +21,7 @@ export default function StartMenu() {
     const [isOpen, setOpen] = React.useState(false);
     const refMenu = React.useRef<HTMLDivElement>(null);
     const [_, setLoggedInStorage] = useLocalStorage("logged_in", true);
+    const setCurrentUser = useSetRecoilState(currentUser);
 
     const [
         //      { showLoader, showTaskbar, showIcons, showWindows },
@@ -76,6 +77,7 @@ export default function StartMenu() {
             dispatch({ type: RESET_WINDOWS });
         }, 2500);
         // eslint-disable-next-line react-hooks/exhaustive-deps
+        setCurrentUser(null);
         setLoggedInStorage(false);
         window.location.reload();
     }
