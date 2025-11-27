@@ -42,8 +42,9 @@
     }
 
     &.-run {
-        width: auto;
+        width: 475px;
         height: auto;
+        min-height: 200px;
     }
 
     &.-recycle_bin {
@@ -62,6 +63,12 @@
         width: 700px;
         height: 650px;
         max-height: 650px;
+    }
+
+    &.-media_player {
+        width: 650px;
+        height: 500px;
+        max-height: 500px;
     }
 
     &.-user {

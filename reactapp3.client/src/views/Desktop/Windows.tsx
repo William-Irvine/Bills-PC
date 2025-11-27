@@ -16,6 +16,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import FileViewer from "../../windows/FileViewer";
 import RecycleBin from "../../windows/RecycleBin";
 import InternetExplorer from "../../windows/InternetExplorer";
+import WindowsMediaPlayer from "../../windows/WindowsMediaPlayer";
 
 const componentList: any = {
     welcome: Welcome,
@@ -26,6 +27,7 @@ const componentList: any = {
     documents: Documents,
     recycle_bin: RecycleBin,
     browser: InternetExplorer,
+    media_player: WindowsMediaPlayer,
 };
 
 export default function Windows() {

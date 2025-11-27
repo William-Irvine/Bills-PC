@@ -87,7 +87,7 @@ export const accounts: { [key: string]: Account } = {
                     name: "New Text Document.txt",
                     type: "file",
                     icon: "src/assets/images/notepad.png",
-                    content: ""
+                    content: "awwsawwwdadwdwwwwwwdadsdwaawdwsde"
                 }
             ]
         }
@@ -109,13 +109,6 @@ export const accounts: { [key: string]: Account } = {
                     component: "RecycleBin"
                 },
                 {
-                    id: "welcome",
-                    name: "Welcome.txt",
-                    type: "file",
-                    icon: "src/assets/images/notepad.png",
-                    content: "WELCOME TO BILL'S PC\n\nFeel free to explore!\n\nThere might be more to discover than meets the eye...\n\nTry checking out what other users have left behind.\n\nHint: Check the phone list!\n\n-Management"
-                },
-                {
                     id: "phone_list",
                     name: "Phone_List.txt",
                     type: "file",
@@ -130,7 +123,15 @@ export const accounts: { [key: string]: Account } = {
                     content: "DAVE'S LOGIN INFO\n(shhh don't tell anyone!)\n\nUsername: dave.johnson\nPassword: His extension from the phone list\n\nHe's such a normie lol\n\n-Tommy"
                 }
             ],
-            recycleBin: []
+            recycleBin: [
+                {
+                    id: "welcome",
+                    name: "Welcome.txt",
+                    type: "file",
+                    icon: "src/assets/images/notepad.png",
+                    content: "WELCOME TO BILL'S PC\n\nFeel free to explore!\n\nThere might be more to discover than meets the eye...\n\nTry checking out what other users have left behind.\n\nHint: Check the phone list!\n\n-Management"
+                }
+            ]
         }
     },
 
