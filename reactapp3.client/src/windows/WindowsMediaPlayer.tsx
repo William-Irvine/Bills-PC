@@ -1,11 +1,11 @@
 ﻿// src/windows/WindowsMediaPlayer.tsx
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { currentUser } from "../store/atoms";
+//import { useRecoilValue } from "recoil";
+//import { currentUser } from "../store/atoms";
 import { Button, Toolbar, Separator } from "react95";
 
 export default function WindowsMediaPlayer({ window }: any) {
-    const user = useRecoilValue(currentUser);
+    //const user = useRecoilValue(currentUser);
     const [selectedPlaylist, setSelectedPlaylist] = React.useState<number>(0);
     const [selectedTrack, setSelectedTrack] = React.useState<number>(-1);
     const [isPlaying, setIsPlaying] = React.useState(false);

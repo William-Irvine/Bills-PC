@@ -1,12 +1,8 @@
-//import React, { useEffect, useState } from "react";
+﻿// windows/Weather/index.tsx
 import { useEffect, useState } from "react";
-//import { Button, Anchor, Frame, Table, TableRow, TableHeadCell, TableHead, TableBody, TableDataCell, Separator } from "react95";
 import { Button, Frame, Table, TableRow, TableHeadCell, TableHead, TableBody, TableDataCell } from "react95";
 
-//import useNewWindow from "../../hooks/useNewWindow";
-
 import "./styles.scss";
-
 
 interface Forecast {
     date: string;
@@ -17,14 +13,14 @@ interface Forecast {
 
 function getDate(date_offset: number) {
     const today = new Date();
-    const month = today.getMonth()+1;
-    const date = today.getDate()+date_offset;
+    const month = today.getMonth() + 1;
+    const date = today.getDate() + date_offset;
     const year = today.getFullYear();
-    if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && date > 31) 
+    if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && date > 31)
         return `${month + 1}/${date - 31}/${year}`;
     else if ((month == 4 || month == 6 || month == 9 || month == 11) && date > 30)
-            return `${month + 1}/${date - 30}/${year}`;     
-    else if (month == 2 && (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) && date > 29) 
+        return `${month + 1}/${date - 30}/${year}`;
+    else if (month == 2 && (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) && date > 29)
         return `${month + 1}/${date - 29}/${year}`;
     else if (month == 2 && !(((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) && date > 28)
         return `${month + 1}/${date - 28}/${year}`;
@@ -34,10 +30,34 @@ function getDate(date_offset: number) {
 
 export default function Weather() {
     const [forecasts, setForecasts] = useState<Forecast[]>();
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         populateWeatherData();
     }, []);
+
+    async function populateWeatherData() {
+        try {
+            // Try .NET backend first
+            let response = await fetch('weatherforecast');
+
+            if (response.ok) {
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    setForecasts(data);
+                    return;
+                }
+            }
+
+            // .NET backend not available - show placeholder data
+            console.log('.NET Web Server not available - showing placeholder');
+            setError(true);
+
+        } catch (err) {
+            console.error('Weather fetch error:', err);
+            setError(true);
+        }
+    }
 
     return (
         <section className="weatherWindow">
@@ -67,97 +87,56 @@ export default function Weather() {
                                 <TableHeadCell>Summary</TableHeadCell>
                             </TableRow>
                         </TableHead>
-                        {forecasts 
-                        ? forecasts.map(forecast =>
-                            <TableBody>
-                                <TableRow key={forecast.date}>
-                                    <TableDataCell>{forecast.date}</TableDataCell>
-                                    <TableDataCell>{forecast.temperatureC}</TableDataCell>
-                                    <TableDataCell>{forecast.temperatureF}</TableDataCell>
-                                    <TableDataCell>{forecast.summary}</TableDataCell>
-                                </TableRow>
-                            </TableBody>
-                            )
-                            : <TableBody>
-                                <TableRow>
-                                    <TableDataCell>{getDate(0)}</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>No Data</TableDataCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableDataCell>{getDate(1)}</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>No Data</TableDataCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableDataCell>{getDate(2)}</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>No Data</TableDataCell>
+                        <TableBody>
+                            {forecasts && forecasts.length > 0
+                                ? forecasts.map(forecast =>
+                                    <TableRow key={forecast.date}>
+                                        <TableDataCell>{forecast.date}</TableDataCell>
+                                        <TableDataCell>{forecast.temperatureC}</TableDataCell>
+                                        <TableDataCell>{forecast.temperatureF}</TableDataCell>
+                                        <TableDataCell>{forecast.summary}</TableDataCell>
                                     </TableRow>
-                                <TableRow>
-                                    <TableDataCell>{getDate(3)}</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>No Data</TableDataCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableDataCell>{getDate(4)}</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>NA</TableDataCell>
-                                    <TableDataCell>No Data</TableDataCell>
-                                </TableRow>
-                            </TableBody>
-                        }
+                                )
+                                : <>
+                                    <TableRow>
+                                        <TableDataCell>{getDate(0)}</TableDataCell>
+                                        <TableDataCell>15</TableDataCell>
+                                        <TableDataCell>59</TableDataCell>
+                                        <TableDataCell>Partly Cloudy</TableDataCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableDataCell>{getDate(1)}</TableDataCell>
+                                        <TableDataCell>18</TableDataCell>
+                                        <TableDataCell>64</TableDataCell>
+                                        <TableDataCell>Sunny</TableDataCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableDataCell>{getDate(2)}</TableDataCell>
+                                        <TableDataCell>12</TableDataCell>
+                                        <TableDataCell>54</TableDataCell>
+                                        <TableDataCell>Rainy</TableDataCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableDataCell>{getDate(3)}</TableDataCell>
+                                        <TableDataCell>16</TableDataCell>
+                                        <TableDataCell>61</TableDataCell>
+                                        <TableDataCell>Overcast</TableDataCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableDataCell>{getDate(4)}</TableDataCell>
+                                        <TableDataCell>20</TableDataCell>
+                                        <TableDataCell>68</TableDataCell>
+                                        <TableDataCell>Clear</TableDataCell>
+                                    </TableRow>
+                                </>
+                            }
+                        </TableBody>
                     </Table>
                 </Frame>
             </div>
             <div className="notif">
-                {!forecasts ? <p>Unable to contact server...</p> : <p></p>}                
+                {error && <p>⚠️ Backend server unavailable - showing sample data</p>}
             </div>
         </section>
     );
-
-    //Get Some Weather
-    //var coords;
-    //var geometry;
-    //var lat = 0;
-    //var lng = 0;
-
-    /*
-        Try to get the data from our .NET web server. 
-        Otherwise just use React to get it directly from NWS
-    */
-    async function populateWeatherData() {
-        //var response = await fetch('weatherforecasts');
-        var response = await fetch('weatherforecast');
-        //console.log('>>> ', response);
-        //console.log('>>> Status: ', response.status);
-        var data
-
-        var data_source = 0;
-        if (response.status != 404) {
-            data = await response.json();
-            data_source = 1;
-        } else {
-            console.log('>>> .NET Web Server Down ');
-            console.log('>>> Finding Another Way');
-
-            response = await fetch('https://api.weather.gov/stations/KPYM/');
-            console.log('>>> ', response);
-            console.log('>>> Status: ', response.status);
-            if (response.status != 404) {
-                data = await response.json;
-                console.log('>>> ', data);
-                console.log('>>> Status: ', response.status);
-            }
-            data_source = 2;
-        }
-        setForecasts(data);
-        console.log("Data Source: ", data_source);
-    }
-
-
 }

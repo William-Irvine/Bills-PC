@@ -1,10 +1,10 @@
-import React from "react";
+//import React from "react";
 //import { Button, Select, TextInput } from "react95";
 import { Bar, Button } from "react95";
 //import { useRecoilValue } from recoil;
 import { Table, TableHead, TableBody, TableRow, TableHeadCell, TableDataCell } from "react95";
 
-import useNewWindow from "../../hooks/useNewWindow";
+//import useNewWindow from "../../hooks/useNewWindow";
 
 import formatDate from "../../utilities/formatDate";
 import formatBigNumber from "../../utilities/formatBigNumber";
@@ -15,18 +15,18 @@ import "./styles.scss";
 export default function Documents() {
     //const followed = useRecoilValue(mostFollowed);
     //const [shortcuts, setShortcuts] = React.useState([]);
-    const [highlighted, setHighlight] = React.useState("");
+    //const [highlighted, setHighlight] = React.useState("");
 
     //const { getMostFollowed } = useReposApi();
-    const open = useNewWindow();
+    //const open = useNewWindow();
 
-    const handleSnglClick = (name: any) => () => {
-        setHighlight(name);
-    };
+    //const handleSnglClick = (name: any) => () => {
+    //    setHighlight(name);
+    //};
 
-    const handleDblClick = (name: any, owner: any) => () => {
-        open(name, owner);
-    };
+    //const handleDblClick = (name: any, owner: any) => () => {
+    //    open(name, owner);
+    //};
 
     //React.useEffect(() => {
         //getMostFollowed();
