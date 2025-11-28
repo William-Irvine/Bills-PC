@@ -237,19 +237,19 @@ export const accounts: { [key: string]: Account } = {
                 },
                 {
                     id: "band_photos",
-                    name: "Band_Photos",
+                    name: "Band_Photos.txt",
                     type: "file",
-                    icon: "src/assets/images/folder.png",
+                    icon: "src/assets/images/notepad.png",
                     content: "Photos from last gig...\nMarcus took some great shots with his gaming PC RGB setup in background lol"
                 }
             ],
             recycleBin: [
                 {
                     id: "guilty_pleasure",
-                    name: "taylor_swift_1989.mp3",
+                    name: "goo_goo_dolls - dizzy_up_the_girl - slide.mp3",
                     type: "file",
                     icon: "src/assets/images/audio.png",
-                    content: "🎵 Shake It Off - Taylor Swift 🎵\n\n...don't tell the guys\n\n(It's actually pretty good)"
+                    content: "🎵 Slide - Goo Goo Dolls 🎵\n\n...don't tell the guys\n\n(It's actually pretty good)"
                 }
             ]
         }
@@ -410,7 +410,7 @@ export const accounts: { [key: string]: Account } = {
                     name: "THE_TRUTH.txt",
                     type: "file",
                     icon: "src/assets/images/notepad.png",
-                    content: "CONGRATULATIONS!\n\nYou've discovered all 5 hidden accounts on this PC.\n\nYou are a true explorer.\n\nThe office workers, the metalhead, the film buff, the gamer...\nAll hiding in plain sight on Bill's computer.\n\nThis PC has secrets.\nBut you found them all.\n\nWell done, seeker.\n\n-Alex\n\nP.S. Check the Admin recycle bin for a special surprise..."
+                    content: "CONGRATULATIONS!\n\nYou've discovered all 5 hidden accounts on this PC.\n\nYou are a true explorer.\n\nThe office workers, the metalhead, the film buff, the gamer...\nAll hiding in plain sight on Bill's computer.\n\nThis PC has secrets.\nBut you found them all.\n\nWell done, seeker.\n\n-Alex\n\n"
                 },
                 {
                     id: "browser",
