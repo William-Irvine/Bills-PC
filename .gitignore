@@ -32,6 +32,18 @@ reactapp3.client/.vscode/*
 *.njsproj
 *.sln
 *.sw?
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+bin/
+obj/
 
 reactapp3.server/bin
 reactapp3.server/obj
+
+# Environment variables
+appsettings.Development.json
+*.env
