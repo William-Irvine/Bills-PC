@@ -1,7 +1,7 @@
 @ReactApp3.Server_HostAddress = https://localhost:5110
 //@ReactApp3.Server_HostAddress = https://www.bills-pc.com
 
-GET {{ReactApp3.Server_HostAddress}}/weatherforecast/
+GET {{ReactApp3.Server_HostAddress}}/api/weatherforecast/
 Accept: application/json
 
 #@ReactApp3.Server_HostAddress = http://api.weather.gov
