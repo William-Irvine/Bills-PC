@@ -28,7 +28,7 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="Exists('../reactapp3.client/reactapp3.client.esproj')">
     <ProjectReference Include="..\reactapp3.client\reactapp3.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
