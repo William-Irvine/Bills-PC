@@ -1,6 +1,7 @@
 ﻿// windows/Weather/index.tsx
 import { useEffect, useState } from "react";
 import { Button, Frame, Table, TableRow, TableHeadCell, TableHead, TableBody, TableDataCell } from "react95";
+import { api } from '../config/api';
 
 import "./styles.scss";
 
@@ -135,7 +136,7 @@ export default function Weather() {
                 </Frame>
             </div>
             <div className="notif">
-                {error && <p>⚠️ Backend server unavailable - showing sample data</p>}
+                {error && <p>Backend server unavailable - showing sample data</p>}
             </div>
         </section>
     );
