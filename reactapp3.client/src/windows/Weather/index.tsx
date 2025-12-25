@@ -1,7 +1,7 @@
 ﻿// windows/Weather/index.tsx
 import { useEffect, useState } from "react";
 import { Button, Frame, Table, TableRow, TableHeadCell, TableHead, TableBody, TableDataCell } from "react95";
-import { api } from '../config/api';
+import { api } from '../../config/api';  // ⭐ Import the API config
 
 import "./styles.scss";
 
@@ -39,23 +39,18 @@ export default function Weather() {
 
     async function populateWeatherData() {
         try {
-            // Try .NET backend first
-            let response = await fetch('weatherforecast');
-
-            if (response.ok) {
-                const data = await response.json();
-                if (Array.isArray(data)) {
-                    setForecasts(data);
-                    return;
-                }
+            // ⭐ Use the API config to call the backend
+            const data = await api.get('/weatherforecast');
+            
+            if (Array.isArray(data)) {
+                setForecasts(data);
+                setError(false);
+                return;
             }
-
-            // .NET backend not available - show placeholder data
-            console.log('.NET Web Server not available - showing placeholder');
-            setError(true);
-
         } catch (err) {
+            // Backend not available - show placeholder data
             console.error('Weather fetch error:', err);
+            console.log('Backend not available - showing placeholder');
             setError(true);
         }
     }

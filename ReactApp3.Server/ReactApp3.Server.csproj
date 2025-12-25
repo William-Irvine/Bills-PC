@@ -27,11 +27,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  <!--
-  <ItemGroup Condition="Exists('../reactapp3.client/reactapp3.client.esproj')">
+
+  <ItemGroup>
     <ProjectReference Include="..\reactapp3.client\reactapp3.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
-  -->
+  
 </Project>

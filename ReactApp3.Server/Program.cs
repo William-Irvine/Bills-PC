@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ReactApp3.Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +27,8 @@ builder.Services.AddCors(options =>
             "http://localhost:3000",
             "http://localhost:5173",
             "https://bills-pc.com",
+            "https://www.bills-pc.com",
+            "http://bills-pc.com",
             "http://www.bills-pc.com"
         )
         .AllowAnyMethod()
