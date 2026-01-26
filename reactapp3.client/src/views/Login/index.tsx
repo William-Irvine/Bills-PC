@@ -50,6 +50,9 @@ export default function Login({ onLogin }: any) {
                 // Clear the logout flag when user manuall logs in
                 sessionStorage.removeItem('hasLoggedOut');
 
+                // Set flag for manual login
+                sessionStorage.setItem('manualLogin', 'true');
+
                 onLogin();
             } else {
                 setError(result.error || "Login failed");

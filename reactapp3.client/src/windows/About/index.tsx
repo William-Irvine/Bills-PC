@@ -172,13 +172,16 @@ function AboutContent({ onResumeClick, resumeVisited }: { onResumeClick: () => v
                     Welcome to Bills-PC
                 </h2>
                 <p style={{ marginBottom: '12px' }}>
-                    Hey, I'm Bill. I'm a software developer who enjoys solving problems across the stack—from embedded systems to web applications.
+                    Hey, I'm Bill. I'm a software developer who enjoys solving problems across the stack, from embedded systems to web applications.
                 </p>
                 <p style={{ marginBottom: '12px' }}>
                     I've worked in healthcare software, enterprise tools, and IoT development. Along the way I've debugged proprietary languages, built Visual Basic widgets and Java reports, and learned C the hard way. Each role taught me something different about how software actually works, and I'm always looking for the next challenge.
                 </p>
                 <p style={{ marginBottom: '12px' }}>
-                    Bills-PC is my personal project playground. The Windows 95 aesthetic felt right for the domain, and it's a reminder that building software should be enjoyable. Under the hood: React and ASP.NET Core on modern cloud infrastructure.
+                    Bills-PC is my personal project playground. The Windows 95 aesthetic felt right for the domain, and it's a reminder that coding and design should be enjoyable.
+                </p>
+                <p style={{ marginBottom: '12px' }}>
+                    Under the hood: React and ASP.NET Core on modern cloud infrastructure.
                 </p>
             </div>
 

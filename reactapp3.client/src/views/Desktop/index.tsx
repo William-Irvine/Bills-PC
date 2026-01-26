@@ -187,7 +187,7 @@ export default function Desktop() {
             {showTaskbar && (
                 <>
                     <Taskbar />
-                    {showWindows && soundStorage !== "Off" && <StartupSound />}
+                    {showWindows && soundStorage !== "Off" && sessionStorage.getItem('manualLogin') === 'true' && <StartupSound />}
                 </>
             )}
             <main>

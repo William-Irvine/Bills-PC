@@ -4,6 +4,8 @@
 /node_modules
 
 *.pubxml.user
+*.user
+Properties/PublishProfiles/
 *.pdf
 
 # production

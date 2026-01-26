@@ -11,11 +11,21 @@ export default function StartupSound() {
             volume: 0.5,
             onend: () => {
                 refSound.current = null;
+                // Clear the manual login flag after sound ends
+                sessionStorage.removeItem('manualLogin');
             },
         });
         refSound.current.once("load", function () {
             refSound.current.play();
         });
+
+        // Cleanup
+        return () => {
+            if (refSound.current) {
+                refSound.current.unload();
+            }
+        };
     }, []);
+
     return null;
 }
