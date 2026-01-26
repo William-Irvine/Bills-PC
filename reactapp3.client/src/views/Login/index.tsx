@@ -46,6 +46,10 @@ export default function Login({ onLogin }: any) {
                 }
 
                 setCurrentUser(result.account);
+
+                // Clear the logout flag when user manuall logs in
+                sessionStorage.removeItem('hasLoggedOut');
+
                 onLogin();
             } else {
                 setError(result.error || "Login failed");
@@ -142,15 +146,6 @@ export default function Login({ onLogin }: any) {
                                 OK
                             </Button>
                         </div>
-                    </div>
-                    <div style={{
-                        marginTop: '12px',
-                        padding: '8px',
-                        background: '#c0c0c0',
-                        border: '1px solid #808080',
-                        fontSize: '11px'
-                    }}>
-                        <strong>💡 Default login:</strong> admin / admin123
                     </div>
                 </WindowContent>
             </Window>

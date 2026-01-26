@@ -30,7 +30,12 @@ export default function WindowFrame({ name, cssName, window, onClose, children }
     };
 
     React.useEffect(() => {
-        setPos([randomInt(-40, 40), randomInt(10, 30)]);
+        // Check if window has as specific position, otherwise randomize
+        if (window.position) {
+            setPos([window.position.x, window.position.y]);
+        } else {
+            setPos([randomInt(-40, 40), randomInt(10, 30)]);
+        }
     }, [name]);
 
     return (
@@ -45,7 +50,7 @@ export default function WindowFrame({ name, cssName, window, onClose, children }
                 data-name={name}
                 style={{
                     display: window.visibility[1] ? "block" : "none",
-                    zIndex: focused === name ? 2 : 1,
+                    zIndex: focused === name ? 999 : (window.zIndex ||1),
                 }}
                 className={`windowFrame -${cssName}`}
             >

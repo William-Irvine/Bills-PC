@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+*.pubxml.user
+*.pdf
+
 # production
 /build
 

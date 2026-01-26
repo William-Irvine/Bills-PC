@@ -12,6 +12,7 @@ export interface DesktopIcon {
     browserHistory?: any[];
     bookmarks?: string[];
     playlists?: any[];
+    position?: { x: number; y: number };
 }
 
 export interface Account {
@@ -43,42 +44,65 @@ export const accounts: { [key: string]: Account } = {
                     name: "Recycle Bin",
                     type: "application",
                     icon: "src/assets/images/recycle_bin_full.png",
-                    component: "RecycleBin"
+                    component: "RecycleBin",
+                    position: { x:20, y: 20 }
                 },
                 {
                     id: "about",
-                    name: "About.txt",
+                    name: "About.rtf",
                     type: "file",
-                    icon: "src/assets/images/notepad.png",
-                    content: "ABOUT ME\n\nHi! I'm Bill, and this is my personal website.\n\nI'm a developer who loves retro computing aesthetics.\n\nFeel free to explore - there might be more users on this PC than you think...\n\n- Bill"
+                    icon: "src/assets/images/rtf.png",
+                    content: "ABOUT ME\n\nHi! I'm Bill, and this is my personal website.\n\nI'm a developer who loves retro computing aesthetics.\n\nFeel free to explore - there might be more users on this PC than you think...\n\n- Bill",
+                    position: { x: 20, y: 140 }
+                },
+                {
+                    id: 'browser',
+                    name: "Bill's Resume",
+                    icon: 'src/assets/images/ie.png', // or whatever icon you prefer
+                    type: 'application',
+                    component: 'browser', // Uses InternetExplorer component
+                    browserHistory: [
+                        { title: "Bill's Professional Resume", url: "file:///C:/My Documents/resume.pdf" },
+                        { title: "Github - William Irvine", url: 'github.com/William-Irvine' },
+                        { title: "LinkedIn - William Irvine", url: "linkedin.com/william-irvine-aa117776" }
+                    ],
+                    bookmarks: [
+                        "www.ultimate-guitar.com",
+                        "www.youtube.com"
+                    ],
+                    position: { x: 20, y: 260 }
                 },
                 {
                     id: "weather",
                     name: "Weather Forecast.exe",
                     type: "application",
                     icon: "src/assets/images/program.png",
-                    component: "WeatherApp"
+                    component: "WeatherApp",
+                    position: { x: 20, y: 380 }
                 },
                 {
                     id: "credits",
                     name: "credits.txt",
                     type: "file",
                     icon: "src/assets/images/notepad.png",
-                    content: "CREDITS\n\nWindows 95 UI: React95 library\nInspiration: github95 template\nWeather Data: National Weather Service API\n\nBuilt with React + TypeScript\n\nThanks for visiting!"
+                    content: "CREDITS\n\nWindows 95 UI: React95 library\nInspiration: github95 template\nWeather Data: National Weather Service API\n\nBuilt with React + TypeScript\n\nThanks for visiting!",
+                    position: { x: 140, y: 20 }
                 },
                 {
                     id: "it_notice",
                     name: "IT_Notice.txt",
                     type: "file",
                     icon: "src/assets/images/notepad.png",
-                    content: "IT DEPARTMENT NOTICE\n\nREMINDER: This workstation is shared between multiple users.\n\nPlease log out when finished.\n\nGuest accounts are available for visitors:\nUsername: guest\nPassword: (leave blank)\n\nCurious about who else uses this PC? Try exploring as guest!\n\n-IT Department\nExt. 1337"
+                    content: "IT DEPARTMENT NOTICE\n\nREMINDER: This workstation is shared between multiple users.\n\nPlease log out when finished.\n\nGuest accounts are available for visitors:\nUsername: guest\nPassword: (leave blank)\n\nCurious about who else uses this PC? Try exploring as guest!\n\n-IT Department\nExt. 1337",
+                    position: { x: 140, y: 140 }
                 },
                 {
                     id: "thanks",
                     name: "Thanks_For_Visiting.txt",
                     type: "file",
                     icon: "src/assets/images/notepad.png",
-                    content: "THANKS FOR VISITING!\n\nThis is Bill's personal website and portfolio.\n\nCheck out my projects, read about me, and explore the site.\n\n🎮 EASTER EGG: Did you notice the IT Notice? This PC has other users...\nTry logging out and exploring as 'guest' to start a scavenger hunt!\n\nThere are 5 hidden accounts with clues leading to each other.\nCan you find them all?\n\n-Bill"
+                    content: "THANKS FOR VISITING!\n\nThis is Bill's personal website and portfolio.\n\nCheck out my projects, read about me, and explore the site.\n\n🎮 EASTER EGG: Did you notice the IT Notice? This PC has other users...\nTry logging out and exploring as 'guest' to start a scavenger hunt!\n\nThere are 5 hidden accounts with clues leading to each other.\nCan you find them all?\n\n-Bill",
+                    position: { x: 140, y: 260 }
                 }
             ],
             recycleBin: [
@@ -87,7 +111,7 @@ export const accounts: { [key: string]: Account } = {
                     name: "New Text Document.txt",
                     type: "file",
                     icon: "src/assets/images/notepad.png",
-                    content: "awwsawwwdadwdwwwwwwdadsdwaawdwsde"
+                    content: "awPsawwAdadwSdSwwWwwwdaOdsdRwaaDwdwsde\n\n admin123 \n\nawsed1222154125saw141"
                 }
             ]
         }

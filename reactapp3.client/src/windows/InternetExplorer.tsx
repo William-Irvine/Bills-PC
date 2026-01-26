@@ -6,7 +6,9 @@ import { Button, Toolbar, TextInput, Separator } from "react95";
 
 export default function InternetExplorer({ window }: any) {
     const user = useRecoilValue(currentUser);
-    const [activeTab, setActiveTab] = React.useState<'home' | 'history' | 'bookmarks'>('home');
+    const isResumeBrowser = window?.label?.toLowerCase().includes('resume');
+    const [activeTab, setActiveTab] = React.useState<'home' | 'history' | 'bookmarks' | 'resume'>(
+        isResumeBrowser ? 'resume' : 'home');
 
     // Get browser data from the window config (passed from accountsData)
     // Try both window.browserHistory and window.window.browserHistory
@@ -14,7 +16,7 @@ export default function InternetExplorer({ window }: any) {
     const bookmarks = window?.bookmarks || window?.window?.bookmarks || [];
 
     // Debug: Log what we're receiving
-    console.log('InternetExplorer window data:', window);
+    //console.log('InternetExplorer window data:', window);
 
     const renderHome = () => (
         <div style={{
@@ -143,6 +145,27 @@ export default function InternetExplorer({ window }: any) {
         </div>
     );
 
+    const renderResume = () => (
+        <div style={{
+            padding: '0',
+            fontFamily: 'Arial',
+            background: 'white',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            <iframe
+                src="/resume.pdf#zoom=FitW"
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    border: 'none'
+                }}
+                title="Bill's Resume"
+            />
+        </div>
+    );
+
     return (
         <div style={{
             height: '100%',
@@ -176,6 +199,14 @@ export default function InternetExplorer({ window }: any) {
                 >
                     ⭐ Favorites
                 </Button>
+                <Button
+                    variant="menu"
+                    size="sm"
+                    active={activeTab === 'resume'}
+                    onClick={() => setActiveTab('resume')}
+                >
+                    📄 Resume
+                </Button>
             </Toolbar>
 
             <Separator />
@@ -204,6 +235,7 @@ export default function InternetExplorer({ window }: any) {
                 {activeTab === 'home' && renderHome()}
                 {activeTab === 'history' && renderHistory()}
                 {activeTab === 'bookmarks' && renderBookmarks()}
+                {activeTab === 'resume' && renderResume()}
             </div>
 
             {/* Status Bar */}
@@ -219,6 +251,7 @@ export default function InternetExplorer({ window }: any) {
                 <span>
                     {activeTab === 'history' && `${browserHistory.length} item(s) in history`}
                     {activeTab === 'bookmarks' && `${bookmarks.length} bookmark(s)`}
+                    {activeTab === 'resume' && 'Viewing Bill\'s Resume' }
                     {activeTab === 'home' && 'Ready'}
                 </span>
                 <span>🌐 Internet Explorer 5.0</span>

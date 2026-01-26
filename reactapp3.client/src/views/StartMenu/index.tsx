@@ -62,7 +62,10 @@ export default function StartMenu() {
     };
 
     const handleLogoutClick = () => {
-        // @ts-ignore
+        // Set flag to prevent auto-login after logout
+        sessionStorage.setItem('hasLoggedOut', 'true');
+
+        // @ts-ignore 
         dispatch({ type: SET_LOADING });
         window.setTimeout(() => {
             // @ts-ignore

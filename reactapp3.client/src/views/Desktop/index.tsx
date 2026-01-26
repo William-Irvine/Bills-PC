@@ -1,6 +1,6 @@
 ﻿// src/views/Desktop/index.tsx
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 import StartupSound from "../../components/StartupSound";
 import Taskbar from "../Taskbar";
@@ -8,7 +8,7 @@ import Windows from "./Windows";
 import DesktopButton from "./DesktopButton";
 
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { windowObj, currentUser } from "../../store/atoms";
+import { windowObj, currentUser, focusedElement } from "../../store/atoms";
 import reducer, {
     SET_LOADING,
     SET_TASKBAR,
@@ -24,6 +24,7 @@ export default function Desktop() {
     const [active, setActive] = React.useState("");
     const [soundStorage, _] = useLocalStorage("billsPC_noSound", "On");
     const [desktopIcons, setDesktopIcons] = React.useState<any[]>([]);
+    const setFocused = useSetRecoilState(focusedElement);
 
     const [
         { showLoader, showTaskbar, showIcons, showWindows },
@@ -44,7 +45,8 @@ export default function Desktop() {
                 metadata: icon.metadata,
                 browserHistory: icon.browserHistory,
                 bookmarks: icon.bookmarks,
-                playlists: icon.playlists
+                playlists: icon.playlists,
+                position: icon.position
             }));
             setDesktopIcons(icons);
         }
@@ -108,12 +110,84 @@ export default function Desktop() {
         }
     }, [user]);
 
+    // Auto-open About and Resume windows
+    React.useEffect(() => {
+        if (user && desktopIcons.length > 0 && showWindows) {
+            const hasWelcomeShown = localStorage.getItem('bills_welcome') === 'false';
+
+            // Find about and resume icons
+            const aboutIcon = desktopIcons.find(icon => icon.label.toLowerCase().includes('about'));
+            const resumeIcon = desktopIcons.find(icon => icon.label.toLowerCase().includes('resume'));
+
+            const windowsToOpen: any = {};
+
+            // Always open resume (bottom layer)
+            if (resumeIcon) {
+                windowsToOpen[resumeIcon.name] = {
+                    label: resumeIcon.label,
+                    header: `${resumeIcon.label} - Internet Explorer`,
+                    desktopIcon: resumeIcon.desktopIcon,
+                    visibility: [true, true],
+                    component: resumeIcon.component,
+                    browserHistory: resumeIcon.browserHistory || [],
+                    bookmarks: resumeIcon.bookmarks || [],
+                    position: { x:100, y: 80},
+                    zIndex: 1  // Bottom layer
+                };
+            }
+
+            // Always open about (middle/top layer depending on welcome)
+            if (aboutIcon) {
+                windowsToOpen[aboutIcon.name] = {
+                    label: aboutIcon.label,
+                    header: aboutIcon.label,
+                    desktopIcon: aboutIcon.desktopIcon,
+                    visibility: [true, true],
+                    component: aboutIcon.component,
+                    content: aboutIcon.content,
+                    type: aboutIcon.type,
+                    position: { x: 150, y: 120},
+                    zIndex: hasWelcomeShown ? 3 : 2  // Top if no welcome, middle if welcome shown
+                };
+            }
+
+            // Merge with existing windows
+            if (Object.keys(windowsToOpen).length > 0) {
+                setTimeout(() => {
+                    setWindows((current: any) => ({
+                        ...current,
+                        ...windowsToOpen
+                    }));
+                }, 2600); // After desktop animations complete
+            }
+        }
+    }, [user, desktopIcons, showWindows, setWindows]);
+
+    // Force Welcome window to front if it's opened
+    React.useEffect(() => {
+        const hasWelcomeShown = localStorage.getItem('bills_welcome') === 'false';
+
+        if (!hasWelcomeShown && showWindows) {
+            setTimeout(() => {
+                setFocused('welcome');
+            }, 2700);  // After auto-open windows finish loading (2600 + 100ms buffer)
+        } else if (hasWelcomeShown && showWindows) {
+            // On return visits, focus About window
+            setTimeout(() => {
+                const aboutIcon = desktopIcons.find(icon => icon.label.toLowerCase().includes('about'));
+                if (aboutIcon) {
+                    setFocused(aboutIcon.name);
+                }
+            }, 2700);
+        }
+    }, [showWindows]);
+
     return (
         <>
             {showTaskbar && (
                 <>
                     <Taskbar />
-                    {(soundStorage !== "Off") && <StartupSound />}
+                    {showWindows && soundStorage !== "Off" && <StartupSound />}
                 </>
             )}
             <main>
@@ -121,6 +195,7 @@ export default function Desktop() {
                     <section
                         className="flex flex-column desktop__background"
                         onClick={handleDesktopClick}
+                        style={{ position: 'relative', height: '100%' }}
                     >
                         {showIcons && user && desktopIcons.map((icon, _index) => {
                             return (
@@ -132,6 +207,7 @@ export default function Desktop() {
                                             icon={icon.desktopIcon}
                                             active={active}
                                             onDoubleClick={handleButtonDblClick(icon)}
+                                            position={icon.position}
                                         />
                                     )}
                                 </React.Fragment>
